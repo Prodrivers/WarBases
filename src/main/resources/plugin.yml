@@ -1,0 +1,17 @@
+name: WarBases
+main: fr.horgeon.prodrivers.games.warbases.Main
+version: ${project.version}
+description: ${project.description}
+author: [Horgeon,InstanceLabs,mepeisen]
+depend: [MinigamesLib,ProtocolLib,BountifulAPI,BossBarAPI,PacketsUtilities,WorldEdit,FastAsyncWorldEdit,ProdriversCommons]
+
+commands:
+   warbases:
+      description: Main command
+      usage: /warbases [action]
+      aliases: [wb]
+
+permissions:
+    WarBases.setup:
+        description: Allows to setup WarBases arenas.
+        default: op
