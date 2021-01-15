@@ -13,6 +13,13 @@
 
 	<packaging>jar</packaging>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.release>8</maven.compiler.release>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
@@ -130,18 +137,25 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<defaultGoal>clean compile resources:resources assembly:single</defaultGoal>
+		<defaultGoal>clean compile resources:resources package</defaultGoal>
 
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>
 				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources/</directory>
+				<directory>${basedir}</directory>
 				<includes>
-					<include>plugin.yml</include>
-					<include>config.yml</include>
-					<include>messages.yml</include>
+					<include>README.md</include>
+					<include>LICENSE.md</include>
 				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<excludes>
+					<exclude>*.java</exclude>
+				</excludes>
 			</resource>
 		</resources>
 
@@ -149,36 +163,25 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
+				<version>3.8.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<release>${maven.compiler.release}</release>
+					<forceJavacCompilerUse>true</forceJavacCompilerUse>
 				</configuration>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>fr.horgeon.prodrivers.api.ProdriversAPI</mainClass>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>./ProdriversAPI/libs/</classpathPrefix>
+							<mainClass>fr.prodriverspark.acaretia.ProdrivRetia</mainClass>
 						</manifest>
 					</archive>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
 				</configuration>
 			</plugin>
 		</plugins>
