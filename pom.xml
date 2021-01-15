@@ -19,32 +19,16 @@
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 		</repository>
 		<repository>
-			<id>horgeon-repo-snapshot</id>
-			<url>https://repo.horgeon.fr/repository/maven-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>prodrivers-repo</id>
+			<url>https://repo.prodrivers.fr/</url>
 		</repository>
 		<repository>
 			<id>horgeon-repo</id>
-			<url>https://repo.horgeon.fr/repository/maven-releases/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<url>https://repo.horgeon.fr/repository/maven-public/</url>
 		</repository>
 		<repository>
-			<id>mce-repo</id>
-			<url>http://nexus.xworlds.eu/nexus/content/repositories/mce-releases/</url>
-		</repository>
-		<repository>
-			<id>mce-repo-snapshot</id>
-			<url>http://nexus.xworlds.eu/nexus/content/repositories/mce-snapshots/</url>
+			<id>a5h73y-repo</id>
+			<url>https://dl.bintray.com/a5h73y/repo/</url>
 		</repository>
 		<repository>
 			<id>inventive-repo</id>
@@ -57,12 +41,6 @@
 		<repository>
 			<id>sk89q-snapshots</id>
 			<url>http://maven.sk89q.com/artifactory/repo</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 		<repository>
 			<id>fawe-repo</id>
@@ -75,28 +53,28 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.9.2-R0.1-SNAPSHOT</version>
+			<version>1.9.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--Bukkit API-->
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.9.2-R0.1-SNAPSHOT</version>
+			<version>1.9.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--BossBar API-->
 		<dependency>
 			<groupId>org.inventivetalent</groupId>
 			<artifactId>bossbarapi</artifactId>
-			<version>2.4.1</version>
+			<version>2.4.3-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--Bountiful API-->
 		<dependency>
 			<groupId>com.connorlinfoot</groupId>
 			<artifactId>BountifulAPI</artifactId>
-			<version>1.6.1</version>
+			<version>1.6.4</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--MinigamesLib API-->
@@ -138,14 +116,14 @@
 		<dependency>
 			<groupId>fr.prodrivers.bukkit</groupId>
 			<artifactId>prodrivers-commons-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--CorpseReborn-->
 		<dependency>
 			<groupId>org.golde.bukkit</groupId>
 			<artifactId>corpsereborn</artifactId>
-			<version>2.11.2</version>
+			<version>2.16.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
