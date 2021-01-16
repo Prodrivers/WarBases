@@ -6,14 +6,10 @@ import com.comze_instancelabs.minigamesapi.util.Util;
 import fr.horgeon.prodrivers.games.warbases.arena.ArenaPlayer;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameClass {
 	private static Map<String, GameClass> classes = new HashMap<>();
@@ -22,12 +18,14 @@ public class GameClass {
 	public final ItemStack chestplate;
 	public final ItemStack leggings;
 	public final ItemStack boots;
+	private final List<ItemStack> items;
 
 	GameClass( PluginInstance pli, String className ) {
 		String helmetEnchantsStr = pli.getClassesConfig().getConfig().getString( "config.kits." + className + ".helmetEnchants" );
 		String chestplateStr = pli.getClassesConfig().getConfig().getString( "config.kits." + className + ".chestplate" );
 		String leggingsStr = pli.getClassesConfig().getConfig().getString( "config.kits." + className + ".leggings" );
 		String bootsStr = pli.getClassesConfig().getConfig().getString( "config.kits." + className + ".boots" );
+		String itemsStr = pli.getClassesConfig().getConfig().getString( "config.kits." + className + ".items" );
 
 		List<ItemStack> chestplateIS = Util.parseItems( chestplateStr );
 		List<ItemStack> leggingsIS = Util.parseItems( leggingsStr );
@@ -35,6 +33,7 @@ public class GameClass {
 		chestplate = ( chestplateIS.size() > 0 ? chestplateIS.get( 0 ) : null );
 		leggings = ( leggingsIS.size() > 0 ? leggingsIS.get( 0 ) : null );
 		boots = ( bootsIS.size() > 0 ? bootsIS.get( 0 ) : null );
+		items = Util.parseItems( itemsStr );
 
 		this.helmetEnchantments = parseEnchantments( helmetEnchantsStr );
 	}
@@ -115,6 +114,15 @@ public class GameClass {
 			player.getInventory().setBoots( this.boots );
 		} else {
 			addDefaultBoots( player );
+		}
+
+		int i = 0;
+		for(ItemStack item : items) {
+			player.getInventory().setItem( i, item );
+			i++;
+			if(i == 2) {
+				i = 7; // Skip through UI
+			}
 		}
 
 		player.updateInventory();
