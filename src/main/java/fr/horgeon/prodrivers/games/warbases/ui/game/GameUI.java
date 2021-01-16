@@ -21,7 +21,7 @@ public enum GameUI {
 			return GameUI.InHotbar;
 		else if( value.equalsIgnoreCase( "light" ) )
 			return GameUI.Light;
-		return null;
+		return Empty;
 	}
 
 	public String toString() {

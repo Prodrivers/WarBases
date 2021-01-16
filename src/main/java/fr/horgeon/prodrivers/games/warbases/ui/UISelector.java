@@ -1,28 +1,19 @@
 package fr.horgeon.prodrivers.games.warbases.ui;
 
-import com.comze_instancelabs.minigamesapi.Arena;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
-import com.mongodb.client.model.Updates;
 import fr.horgeon.prodrivers.games.warbases.Constants;
 import fr.horgeon.prodrivers.games.warbases.Main;
-import fr.horgeon.prodrivers.games.warbases.arena.ArenaPlayer;
 import fr.horgeon.prodrivers.games.warbases.configuration.EMessagesConfig;
 import fr.horgeon.prodrivers.games.warbases.configuration.players.PlayerConfiguration;
 import fr.horgeon.prodrivers.games.warbases.ui.game.GameUI;
 import fr.horgeon.prodrivers.games.warbases.ui.game.GameUIQuality;
 import fr.horgeon.prodrivers.games.warbases.ui.game.UIManager;
-import fr.prodrivers.bukkit.commons.storage.StorageProvider;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bson.Document;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
 
 public class UISelector {
 	private static BaseComponent[] lightweightEnabled = null, enhancedEnabledInHotbarSD, enhancedEnabledInHotbarHD; //, enhancedEnabledOnTopOfHotbarSD, enhancedEnabledOnTopOfHotbarHD;
@@ -130,11 +121,11 @@ public class UISelector {
 		//enhancedEnabledOnTopOfHotbarHD = new BaseComponent[]{ frame, blank, intro, lightweight_disabled, enhanced_enabled, blank, enhanced_flavor, inhotbar_disabled, ontopofhotbar_enabled, blank, enhanced_quality, quality_sd_disabled, quality_hd_enabled, blank, frame };
 	}
 
-	private static void send( JavaPlugin plugin, PluginInstance pli, Player player ) {
+	private static void send( Main plugin, PluginInstance pli, Player player ) {
 		if( lightweightEnabled == null )
 			build( pli );
 
-		PlayerConfiguration configuration = PlayerConfiguration.get( player );
+		PlayerConfiguration configuration = PlayerConfiguration.get( plugin, player );
 
 		if( configuration.getUI() == GameUI.Light ) {
 			for( BaseComponent comp : lightweightEnabled )
@@ -174,7 +165,7 @@ public class UISelector {
 			return;
 		}
 
-		PlayerConfiguration.set( player, ui );
+		PlayerConfiguration.set( plugin, player, ui );
 
 		player.spigot().sendMessage( preferenceSet );
 
@@ -185,11 +176,11 @@ public class UISelector {
 	}
 
 	private static void enableUI( Main plugin, Player player ) {
-		enableUI( plugin, player, PlayerConfiguration.get( player ).getUI() );
+		enableUI( plugin, player, PlayerConfiguration.get( plugin, player ).getUI() );
 	}
 
 	private static void enableLightweight( Main plugin, Player player ) {
-		PlayerConfiguration.set( player, GameUIQuality.SD );
+		PlayerConfiguration.set( plugin, player, GameUIQuality.SD );
 		enableUI( plugin, player, GameUI.Light );
 	}
 
@@ -206,7 +197,7 @@ public class UISelector {
 	}*/
 
 	private static void enableQuality( Main plugin, Player player, GameUIQuality quality ) {
-		PlayerConfiguration.set( player, quality );
+		PlayerConfiguration.set( plugin, player, quality );
 		enableUI( plugin, player );
 	}
 

@@ -12,7 +12,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
@@ -49,12 +48,12 @@ public class ArenaPlayer {
 
 	private boolean inParty = false;
 
-	public ArenaPlayer( JavaPlugin plugin, Player player, int lives, ArenaTeam team ) {
+	public ArenaPlayer( Main plugin, Player player, int lives, ArenaTeam team ) {
 		this.player = player;
 		this.lives = lives;
 		this.team = team;
 
-		this.configuration = PlayerConfiguration.get( this );
+		this.configuration = PlayerConfiguration.get( plugin, this );
 	}
 
 	void loadKit( PluginInstance pli ) {

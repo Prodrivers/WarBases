@@ -1,25 +1,22 @@
 package fr.horgeon.prodrivers.games.warbases.configuration.players;
 
-import com.mongodb.client.model.Updates;
-import fr.horgeon.prodrivers.games.warbases.Constants;
+import fr.horgeon.prodrivers.games.warbases.Main;
 import fr.horgeon.prodrivers.games.warbases.arena.ArenaPlayer;
 import fr.horgeon.prodrivers.games.warbases.ui.game.GameUI;
 import fr.horgeon.prodrivers.games.warbases.ui.game.GameUIQuality;
-import fr.prodrivers.bukkit.commons.storage.StorageProvider;
-import org.bson.Document;
 import org.bukkit.entity.Player;
 
 public class PlayerConfiguration {
 	private GameUI ui;
 	private GameUIQuality quality;
 
-	private PlayerConfiguration( Player player ) {
-		load( player );
+	private PlayerConfiguration( Main plugin, Player player ) {
+		load( plugin, player );
 	}
 
-	private void load( Player player ) {
-		this.ui = PlayerConfiguration.getUI( player );
-		this.quality = PlayerConfiguration.getQuality( player );
+	private void load( Main plugin, Player player ) {
+		this.ui = PlayerConfiguration.getUI( plugin, player );
+		this.quality = PlayerConfiguration.getQuality( plugin, player );
 	}
 
 	public GameUI getUI() {
@@ -30,57 +27,35 @@ public class PlayerConfiguration {
 		return this.quality;
 	}
 
-	public static PlayerConfiguration get( ArenaPlayer player ) {
-		return get( player.getPlayer() );
+	public static PlayerConfiguration get( Main plugin, ArenaPlayer player ) {
+		return get( plugin, player.getPlayer() );
 	}
 
-	public static PlayerConfiguration get( Player player ) {
-		return new PlayerConfiguration( player );
+	public static PlayerConfiguration get( Main plugin, Player player ) {
+		return new PlayerConfiguration( plugin, player );
 	}
 
-	private static GameUI getUI( Player player ) {
-		GameUI sel;
-
-		Document playerData = StorageProvider.getPlayer( player.getUniqueId() );
-		if( playerData != null ) {
-			Object warbasesData = playerData.get( Constants.STORAGE_PLAYER_WARBASES );
-			if( warbasesData != null && warbasesData instanceof Document ) {
-				String storedUi = ( (Document) warbasesData ).getString( Constants.STORAGE_PLAYER_WARBASES_UI );
-				if( storedUi != null ) {
-					sel = GameUI.fromString( storedUi );
-					if( sel != null )
-						return sel;
-				}
-			}
+	private static GameUI getUI( Main plugin, Player player ) {
+		try {
+			return GameUI.valueOf(plugin.getConfig().getString( "players." + player.getUniqueId() + ".ui.type" ));
+		} catch(IllegalArgumentException|NullPointerException e) {
+			return GameUI.Light;
 		}
-
-		return GameUI.Light;
 	}
 
-	private static GameUIQuality getQuality( Player player ) {
-		GameUIQuality sel;
-
-		Document playerData = StorageProvider.getPlayer( player.getUniqueId() );
-		if( playerData != null ) {
-			Object warbasesData = playerData.get( Constants.STORAGE_PLAYER_WARBASES );
-			if( warbasesData != null && warbasesData instanceof Document ) {
-				String storedUiQuality = ( (Document) warbasesData ).getString( Constants.STORAGE_PLAYER_WARBASES_UI_QUALITY );
-				if( storedUiQuality != null ) {
-					sel = GameUIQuality.fromString( storedUiQuality );
-					if( sel != null )
-						return sel;
-				}
-			}
+	private static GameUIQuality getQuality( Main plugin, Player player ) {
+		try {
+			return GameUIQuality.valueOf(plugin.getConfig().getString( "players." + player.getUniqueId() + ".ui.quality" ));
+		} catch(IllegalArgumentException|NullPointerException e) {
+			return GameUIQuality.SD;
 		}
-
-		return GameUIQuality.SD;
 	}
 
-	public static void set( Player player, GameUI ui ) {
-		StorageProvider.updatePlayer( player.getUniqueId(), Updates.set( Constants.STORAGE_PLAYER_WARBASES + "." + Constants.STORAGE_PLAYER_WARBASES_UI, ui.toString() ) );
+	public static void set( Main plugin, Player player, GameUI ui ) {
+		plugin.getConfig().set( "players." + player.getUniqueId() + ".ui.type", ui.toString() );
 	}
 
-	public static void set( Player player, GameUIQuality quality ) {
-		StorageProvider.updatePlayer( player.getUniqueId(), Updates.set( Constants.STORAGE_PLAYER_WARBASES + "." + Constants.STORAGE_PLAYER_WARBASES_UI_QUALITY, quality.toString() ) );
+	public static void set( Main plugin, Player player, GameUIQuality quality ) {
+		plugin.getConfig().set( "players." + player.getUniqueId() + ".ui.quality", quality.toString() );
 	}
 }

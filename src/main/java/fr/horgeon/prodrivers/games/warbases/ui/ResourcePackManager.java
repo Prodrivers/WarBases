@@ -112,7 +112,7 @@ public class ResourcePackManager implements Listener {
 	}
 
 	public void revertToScoreboard( Player p, boolean silent ) {
-		PlayerConfiguration.set( p, GameUI.Light );
+		PlayerConfiguration.set( this.plugin, p, GameUI.Light );
 		if( !silent )
 			p.sendMessage( ( (EMessagesConfig) plugin.getPluginInstance().getMessagesConfig() ).revert_to_scoreboard );
 	}
@@ -129,7 +129,7 @@ public class ResourcePackManager implements Listener {
 		if( current == null || current.getName().equals( WarbasesLobbySection.name ) || current.getName().equals( WarbasesGameSection.name ) ) {
 			System.out.println( "[WarBases] Sending resource pack to player" );
 
-			PlayerConfiguration configuration = PlayerConfiguration.get( p );
+			PlayerConfiguration configuration = PlayerConfiguration.get( this.plugin, p );
 
 			System.out.println( "-> UI " + configuration.getUI() + " with quality " + configuration.getQuality() );
 
@@ -145,14 +145,14 @@ public class ResourcePackManager implements Listener {
 					}
 				} else {
 					p.sendMessage( ( (EMessagesConfig) plugin.getPluginInstance().getMessagesConfig() ).ui_enhanced_not_available );
-					PlayerConfiguration.set( p, GameUI.Light );
+					PlayerConfiguration.set( this.plugin, p, GameUI.Light );
 				}
 			}
 		}
 	}
 
 	public void revertResourcePack( Player p ) {
-		if( PlayerConfiguration.get( p ).getUI() != GameUI.Light ) {
+		if( PlayerConfiguration.get( this.plugin, p ).getUI() != GameUI.Light ) {
 			p.setResourcePack( this.resourcePacks.get( new GameUIKey( GameUI.Empty, null ) ).getValue() );
 		}
 	}
