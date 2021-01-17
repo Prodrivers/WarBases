@@ -101,10 +101,10 @@ public class EArenaSetup extends ArenaSetup {
 	}*/
 
 	public static void checkpointSetup( JavaPlugin plugin, PluginInstance pli, String arenaName, ArenaTeam team, Location location ) {
-		Util.saveComponentForArena( plugin, arenaName, "checkpoints.cp" + Integer.toString( team.toInt() ), location );
 		String path = "checkpoints.cp" + Integer.toString( team.toInt() );
 		pli.getArenasConfig().getConfig().set( path + ".team", team.toInt() );
 		pli.getArenasConfig().getConfig().set( path + ".radius", 3 );
+		Util.saveComponentForArena( plugin, arenaName, "checkpoints.cp" + Integer.toString( team.toInt() ) + ".center", location );
 	}
 
 	public static void checkpointRadiusSetup( PluginInstance pli, String arenaName, ArenaTeam team, int radius ) {
