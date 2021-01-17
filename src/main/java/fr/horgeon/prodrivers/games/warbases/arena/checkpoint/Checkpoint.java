@@ -97,7 +97,9 @@ public class Checkpoint {
 	public boolean isIn( ArenaPlayer p ) {
 		if( !p.isDead() ) {
 			Location l = p.getLocation();
-			return ( ( Math.abs( l.getBlockX() - center.getBlockX() ) < radius ) && ( Math.abs( l.getBlockZ() - center.getBlockZ() ) < radius ) && Math.abs( l.getBlockY() - center.getBlockY() ) < yCheck );
+			float x_diff = l.getBlockX() - center.getBlockX();
+			float z_diff = l.getBlockZ() - center.getBlockZ();
+			return ( ( ( x_diff * x_diff + z_diff * z_diff ) < ( radius * radius ) ) && Math.abs( l.getBlockY() - center.getBlockY() ) < yCheck );
 		}
 
 		return false;
