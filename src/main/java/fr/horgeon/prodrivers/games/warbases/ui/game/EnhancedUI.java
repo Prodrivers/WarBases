@@ -272,6 +272,8 @@ public class EnhancedUI implements IGameUI {
 	public void preAnnounceDeath( ArenaPlayer killer, ArenaPlayer killed ) {}
 
 	public void preCheckpointProgress( ArenaTeam team, int progress, int progressLeft ) {
+		progress = (int) Math.floor((float) progress / (progressLeft + progress) * 100);
+
 		if( team == ArenaTeam.Red )
 			this.redHUDItem = this.redHUDItems.get( progress );
 		else if( team == ArenaTeam.Blue )

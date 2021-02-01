@@ -86,10 +86,12 @@ public class ScoreboardUI implements IGameUI {
 
 	private void updateScoreboardLines( List<Checkpoint> checkpoints ) {
 		for( Checkpoint cp: checkpoints )
-			updateScoreboardCheckpoint( cp.getTeam(), cp.getProgress() );
+			updateScoreboardCheckpoint( cp.getTeam(), cp.getProgress(), cp.getPointsToConquer() );
 	}
 
-	private void updateScoreboardCheckpoint( ArenaTeam team, int progress ) {
+	private void updateScoreboardCheckpoint( ArenaTeam team, int progress, int pointsToConquer ) {
+		progress = (int) Math.floor((float) progress / pointsToConquer * 100);
+
 		String progressStr = String.valueOf( progress );
 		String teamStr = team.toName( this.messages ).toUpperCase();
 		String paddingStr = new String( new char[ width + 3 - teamStr.length() - progressStr.length() ] ).replace( "\0", " " );
@@ -188,7 +190,7 @@ public class ScoreboardUI implements IGameUI {
 	}
 
 	public void preCheckpointProgress( ArenaTeam team, int progress, int progressLeft ) {
-		updateScoreboardCheckpoint( team, progress );
+		updateScoreboardCheckpoint( team, progress, progress + progressLeft );
 	}
 
 	public void checkpointProgress( ArenaPlayer p, ArenaTeam team ) {
